@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 20px rgba(255, 153, 0, 0.8);
+  }
+  
+  .box-glow {
+    box-shadow: 0 0 30px rgba(255, 153, 0, 0.4);
+  }
+  
+  .glass-morph {
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 153, 0, 0.3);
+  }
+}
