@@ -46,11 +46,8 @@ function statusChip(status) {
         "bg-purple-500/10 text-purple-200 border border-purple-400/40",
     };
   }
-  return {
-    label: "Active",
-    classes:
-      "bg-emerald-500/10 text-emerald-200 border border-emerald-400/40",
-  };
+  // For active status, return null so no chip is rendered
+  return null;
 }
 
 export default function ProjectDetailMobile({ project, onClose }) {
@@ -142,10 +139,10 @@ export default function ProjectDetailMobile({ project, onClose }) {
                 <h3 className="text-xs uppercase tracking-[0.28em] text-neutral-400">
                   About project
                 </h3>
-                <p className="text-[13px] leading-relaxed text-neutral-200">
+                <p className="text-[15px] leading-relaxed text-neutral-200">
                   {project.description}
                 </p>
-                <p className="text-[12px] leading-relaxed text-neutral-400">
+                <p className="text-[14px] leading-relaxed text-neutral-400">
                   Operating across dense urban corridors and low‑altitude drone lanes,
                   this node constantly learns from interference, weather, and crowd
                   patterns to keep links stable when everything else is failing.
@@ -183,6 +180,7 @@ export default function ProjectDetailMobile({ project, onClose }) {
                   {/* Status chip */}
                   {(() => {
                     const s = statusChip(project.status);
+                    if (!s) return null;
                     return (
                       <span
                         className={`rounded-full px-3 py-[5px] text-[9px] uppercase tracking-[0.22em] ${s.classes}`}

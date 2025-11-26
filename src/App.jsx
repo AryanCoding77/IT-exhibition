@@ -343,7 +343,7 @@ function App() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1, delay: 0.3 }}
-                src="./cyber-man.png"
+                src="https://instasize.com/p/c905949763134aa504040ece24bb6e8791f94cfd6e6a5169f1b6510519c1a2e9"
                 alt="Futuristic Cyborg" 
                 className="h-[520px] w-auto object-contain relative z-10"
               />
