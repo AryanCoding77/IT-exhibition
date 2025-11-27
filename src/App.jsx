@@ -3,13 +3,31 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import FuzzyText from './components/FuzzyText'
 import AllProjectsMobile from './components/AllProjectsMobile'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function App() {
   const [loading, setLoading] = useState(true)
   const [heroReady, setHeroReady] = useState(false)
   const [experienceCount, setExperienceCount] = useState(0)
   const [statsCount, setStatsCount] = useState(0)
-  const [showProjects, setShowProjects] = useState(false)
+  const [rating, setRating] = useState(0)
+  const [hoverRating, setHoverRating] = useState(0)
+  const [selectedProject, setSelectedProject] = useState('')
+  const [isProjectOpen, setIsProjectOpen] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const isAllProjects = location.pathname.startsWith('/allprojects')
+  const currentPage = location.pathname === '/feedback' ? 'feedback' : 'home'
+
+  const projectOptions = [
+    { value: '', label: 'Select a project' },
+    { value: 'quantum-grid', label: 'Quantum Grid' },
+    { value: 'neon-sentinel', label: 'Neon Sentinel' },
+    { value: 'meta-weave', label: 'Meta Weave' },
+    { value: 'aether-link', label: 'Aether Link' },
+    { value: 'holo-chain', label: 'Holo Chain' },
+    { value: 'omega-core', label: 'Omega Core' },
+  ]
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -199,7 +217,7 @@ function App() {
 
       <div className="relative min-h-screen bg-void text-white font-inter overflow-hidden">
       {/* Outer Frame with Border */}
-      {!showProjects && (
+      {!isAllProjects && (
       <div className="absolute inset-4 border border-gray-800 pointer-events-none z-50">
         {/* Corner Brackets - Top Left */}
         <div className="absolute -top-1 -left-1 w-16 h-16">
@@ -271,9 +289,9 @@ function App() {
       </div>
       )}
 
-      {showProjects ? (
+      {isAllProjects ? (
         <AllProjectsMobile
-          onBackHome={() => setShowProjects(false)}
+          onBackHome={() => navigate('/')}
           onProjectSelect={() => {}}
         />
       ) : (
@@ -298,13 +316,23 @@ function App() {
             animate={{ opacity: 1, y: 0 }}
             className="flex gap-12 text-gray-400 font-inter tracking-wide"
           >
-            {['Home', 'Pages', 'Support', 'Contact'].map((item) => (
+            {[
+              { label: 'Home', onClick: () => navigate('/') },
+              { label: 'Pages' },
+              { label: 'Support' },
+              { label: 'Contact' },
+              { label: 'Feedback', onClick: () => navigate('/feedback') },
+            ].map((item) => (
               <a 
-                key={item}
+                key={item.label}
                 href="#" 
                 className="hover:text-white transition-colors duration-300"
+                onClick={(e) => {
+                  e.preventDefault()
+                  if (item.onClick) item.onClick()
+                }}
               >
-                {item}
+                {item.label}
               </a>
             ))}
           </motion.div>
@@ -314,13 +342,14 @@ function App() {
             animate={{ opacity: 1, x: 0 }}
             whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(255, 153, 0, 0.6)' }}
             className="px-8 py-3 bg-gradient-to-r from-neonOrange to-gradientOrange rounded-full font-semibold tracking-wide transition-all duration-300"
-            onClick={() => setShowProjects(true)}
+            onClick={() => navigate('/allprojects')}
           >
             See all project
           </motion.button>
         </nav>
 
         {/* Main Hero Section */}
+        {currentPage === 'home' && (
         <div className="relative h-[calc(100vh-100px)]">
           {/* Massive Title - Layer 2 (Behind Character) */}
           <motion.h1 
@@ -449,9 +478,155 @@ function App() {
             </div>
           </motion.div>
         </div>
+        )}
+
+        {currentPage === 'feedback' && (
+        <section
+          id="feedback"
+          className="relative z-30 mt-24 px-24 pb-32"
+        >
+          <div className="max-w-3xl mx-auto">
+            <div className="glass-morph rounded-xl p-8 box-glow">
+              <h2 className="text-3xl font-orbitron font-bold tracking-[0.25em] text-neonOrange mb-4">
+                FEEDBACK
+              </h2>
+              <p className="text-gray-300 text-sm mb-8 max-w-xl">
+                Share your thoughts about the DeepTech experience. Your input helps us evolve this cyberpunk world.
+              </p>
+              <form className="space-y-6">
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="flex flex-col space-y-2">
+                    <label className="text-xs tracking-[0.2em] uppercase text-gray-400">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      className="bg-black/40 border border-white/10 rounded-md px-4 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
+                      placeholder="Neo, Trinity..."
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-2">
+                    <label className="text-xs tracking-[0.2em] uppercase text-gray-400">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      className="bg-black/40 border border-white/10 rounded-md px-4 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
+                      placeholder="you@megacorp.net"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="flex flex-col space-y-2">
+                    <label className="text-xs tracking-[0.2em] uppercase text-gray-400">
+                      Project
+                    </label>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setIsProjectOpen((open) => !open)}
+                        className="w-full bg-black/40 border border-white/10 rounded-md px-4 pr-10 py-2 text-left text-sm text-gray-200 hover:border-neonOrange/70 focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange transition-colors flex items-center justify-between"
+                      >
+                        <span>
+                          {selectedProject
+                            ? projectOptions.find((p) => p.value === selectedProject)?.label
+                            : 'Select a project'}
+                        </span>
+                        <svg
+                          className="w-4 h-4 text-neonOrange drop-shadow-[0_0_8px_rgba(255,153,0,0.8)]"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06z" />
+                        </svg>
+                      </button>
+
+                      {isProjectOpen && (
+                        <div className="absolute z-40 mt-1 w-full rounded-md border border-white/10 bg-black/90 shadow-[0_0_30px_rgba(0,0,0,0.9)] backdrop-blur-md overflow-hidden">
+                          <ul className="max-h-56 overflow-y-auto text-sm scrollbar-hide">
+                            {projectOptions.map((option) => (
+                              <li
+                                key={option.value || 'none'}
+                                onClick={() => {
+                                  setSelectedProject(option.value)
+                                  setIsProjectOpen(false)
+                                }}
+                                className={`px-4 py-2 cursor-pointer transition-colors whitespace-nowrap ${
+                                  selectedProject === option.value
+                                    ? 'bg-neonOrange/20 text-neonOrange'
+                                    : 'text-gray-200 hover:bg-white/5 hover:text-neonOrange'
+                                }`}
+                              >
+                                {option.label}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-col space-y-2">
+                    <label className="text-xs tracking-[0.2em] uppercase text-gray-400">
+                      Rating
+                    </label>
+                    <div className="flex items-center gap-4">
+                      <div className="flex gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-1 shadow-[0_0_18px_rgba(0,0,0,0.8)]">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            type="button"
+                            onClick={() => setRating(star)}
+                            onMouseEnter={() => setHoverRating(star)}
+                            onMouseLeave={() => setHoverRating(0)}
+                            className={`w-8 h-8 flex items-center justify-center rounded-full text-base transition-all duration-200 ${
+                              (hoverRating || rating) >= star
+                                ? 'text-neonOrange bg-gradient-to-br from-neonOrange/30 to-gradientOrange/40 shadow-[0_0_18px_rgba(255,153,0,0.7)]'
+                                : 'text-gray-500 hover:text-neonOrange/70'
+                            }`}
+                          >
+                            ★
+                          </button>
+                        ))}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-xs uppercase tracking-[0.2em] text-neonOrange">
+                          {rating ? ['POOR', 'FAIR', 'GOOD', 'GREAT', 'LEGENDARY'][rating - 1] : 'TAP TO RATE'}
+                        </span>
+                        <span className="text-[11px] text-gray-400">
+                          {rating ? `${rating}/5 stars selected` : 'Hover and lock in your experience'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col space-y-2">
+                  <label className="text-xs tracking-[0.2em] uppercase text-gray-400">
+                    Message
+                  </label>
+                  <textarea
+                    rows="4"
+                    className="bg-black/40 border border-white/10 rounded-md px-4 py-3 text-sm resize-none focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
+                    placeholder="Tell us what you loved, or what should be hacked next..."
+                  />
+                </div>
+                <div className="flex justify-end">
+                  <motion.button
+                    whileHover={{ scale: 1.03, boxShadow: '0 0 25px rgba(255, 153, 0, 0.6)' }}
+                    className="px-6 py-2.5 bg-gradient-to-r from-neonOrange to-gradientOrange rounded-full text-sm font-semibold tracking-[0.2em] uppercase"
+                    type="submit"
+                  >
+                    Send Feedback
+                  </motion.button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        )}
       </div>
 
       <div className="relative z-40 md:hidden">
+        {currentPage === 'home' && (
         <section className="flex flex-col min-h-screen px-6 pt-6 pb-8">
           <header className="flex items-center justify-between mb-6">
             <div className="text-xl font-orbitron font-bold tracking-[0.25em]">
@@ -530,13 +705,177 @@ function App() {
 
               <button
                 className="w-full py-3 rounded-full bg-gradient-to-r from-neonOrange to-gradientOrange text-[11px] font-semibold tracking-[0.25em] uppercase shadow-[0_0_30px_rgba(255,153,0,0.7)]"
-                onClick={() => setShowProjects(true)}
+                onClick={() => navigate('/allprojects')}
               >
                 See all project
+              </button>
+              <button
+                className="w-full py-3 rounded-full border border-neonOrange text-[11px] font-semibold tracking-[0.25em] uppercase text-neonOrange mt-2"
+                onClick={() => navigate('/feedback')}
+              >
+                Feedback
               </button>
             </div>
           </div>
         </section>
+        )}
+
+        {currentPage === 'feedback' && (
+        <section className="flex flex-col min-h-screen px-6 pt-6 pb-8">
+          <header className="mt-4 flex items-center justify-between mb-6">
+            <div className="text-xl font-orbitron font-bold tracking-[0.25em]">
+              <span>Deep</span>
+              <span className="text-neonOrange"> Tech</span>
+            </div>
+            <button
+              className="text-[10px] uppercase tracking-[0.25em] text-gray-400"
+              onClick={() => navigate('/')}
+            >
+              Back
+            </button>
+          </header>
+
+          <div className="flex-1 flex items-center justify-center">
+            <div className="w-full mt-2 glass-morph rounded-xl p-5 box-glow">
+              <h2 className="text-2xl font-orbitron font-bold tracking-[0.25em] text-neonOrange mb-3">
+                FEEDBACK
+              </h2>
+              <p className="text-gray-300 text-xs mb-6">
+                Share your thoughts about the DeepTech experience. Your input helps us evolve this cyberpunk world.
+              </p>
+              <form className="space-y-5">
+                <div className="space-y-4">
+                  <div className="flex flex-col space-y-2">
+                    <label className="text-[10px] tracking-[0.2em] uppercase text-gray-400">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      className="bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
+                      placeholder="Neo, Trinity..."
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-2">
+                    <label className="text-[10px] tracking-[0.2em] uppercase text-gray-400">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      className="bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
+                      placeholder="you@megacorp.net"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex flex-col space-y-2">
+                    <label className="text-[10px] tracking-[0.2em] uppercase text-gray-400">
+                      Project
+                    </label>
+                    <div className="relative">
+                      <button
+                        type="button"
+                        onClick={() => setIsProjectOpen((open) => !open)}
+                        className="w-full bg-black/40 border border-white/10 rounded-md px-3 pr-9 py-2 text-left text-sm text-gray-200 hover:border-neonOrange/70 focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange transition-colors flex items-center justify-between"
+                      >
+                        <span>
+                          {selectedProject
+                            ? projectOptions.find((p) => p.value === selectedProject)?.label
+                            : 'Select a project'}
+                        </span>
+                        <svg
+                          className="w-3.5 h-3.5 text-neonOrange drop-shadow-[0_0_8px_rgba(255,153,0,0.8)]"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06z" />
+                        </svg>
+                      </button>
+
+                      {isProjectOpen && (
+                        <div className="absolute z-40 mt-1 w-full rounded-md border border-white/10 bg-black/90 shadow-[0_0_30px_rgba(0,0,0,0.9)] backdrop-blur-md overflow-hidden">
+                          <ul className="max-h-56 overflow-y-auto text-sm scrollbar-hide">
+                            {projectOptions.map((option) => (
+                              <li
+                                key={option.value || 'none'}
+                                onClick={() => {
+                                  setSelectedProject(option.value)
+                                  setIsProjectOpen(false)
+                                }}
+                                className={`px-3 py-2 cursor-pointer transition-colors whitespace-nowrap ${
+                                  selectedProject === option.value
+                                    ? 'bg-neonOrange/20 text-neonOrange'
+                                    : 'text-gray-200 hover:bg-white/5 hover:text-neonOrange'
+                                }`}
+                              >
+                                {option.label}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-col space-y-2">
+                    <label className="text-[10px] tracking-[0.2em] uppercase text-gray-400">
+                      Rating
+                    </label>
+                    <div className="flex flex-col gap-2">
+                      <div className="flex justify-between rounded-full border border-white/10 bg-black/40 px-2 py-1 shadow-[0_0_18px_rgba(0,0,0,0.8)]">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <button
+                            key={star}
+                            type="button"
+                            onClick={() => setRating(star)}
+                            onMouseEnter={() => setHoverRating(star)}
+                            onMouseLeave={() => setHoverRating(0)}
+                            className={`w-8 h-8 flex items-center justify-center rounded-full text-base transition-all duration-200 ${
+                              (hoverRating || rating) >= star
+                                ? 'text-neonOrange bg-gradient-to-br from-neonOrange/30 to-gradientOrange/40 shadow-[0_0_18px_rgba(255,153,0,0.7)]'
+                                : 'text-gray-500 hover:text-neonOrange/70'
+                            }`}
+                          >
+                            ★
+                          </button>
+                        ))}
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[10px] uppercase tracking-[0.2em] text-neonOrange">
+                          {rating ? ['POOR', 'FAIR', 'GOOD', 'GREAT', 'LEGENDARY'][rating - 1] : 'TAP TO RATE'}
+                        </span>
+                        <span className="text-[11px] text-gray-400">
+                          {rating ? `${rating}/5 stars selected` : 'Hover and lock in your experience'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col space-y-2">
+                  <label className="text-[10px] tracking-[0.2em] uppercase text-gray-400">
+                    Message
+                  </label>
+                  <textarea
+                    rows="4"
+                    className="bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm resize-none focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
+                    placeholder="Tell us what you loved, or what should be hacked next..."
+                  />
+                </div>
+
+                <div className="flex justify-end">
+                  <motion.button
+                    whileHover={{ scale: 1.03, boxShadow: '0 0 25px rgba(255, 153, 0, 0.6)' }}
+                    className="px-5 py-2.5 bg-gradient-to-r from-neonOrange to-gradientOrange rounded-full text-xs font-semibold tracking-[0.2em] uppercase"
+                    type="submit"
+                  >
+                    Send Feedback
+                  </motion.button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+        )}
       </div>
       </>
       )}

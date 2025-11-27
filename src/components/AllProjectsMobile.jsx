@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useLocation, useNavigate } from "react-router-dom";
 import ProjectDetailMobile from "./ProjectDetailMobile";
 
 const FILTERS = ["All", "AI", "Robotics", "Web", "XR", "IoT"];
@@ -53,14 +54,89 @@ const PROJECTS = [
     tech: ["AI", "Cloud"],
     url: "https://deeptech.local/projects/omega-core",
   },
+  {
+    id: "nova-pulse",
+    name: "Nova Pulse",
+    description: "Orbital sensor mesh for monitoring deep-space anomalies in real time.",
+    field: "AI",
+    tech: ["AI", "Telemetry", "SatNet"],
+    url: "https://deeptech.local/projects/nova-pulse",
+  },
+  {
+    id: "spectra-node",
+    name: "Spectra Node",
+    description: "Edge compute nodes that color‑code citywide risk in milliseconds.",
+    field: "Web",
+    tech: ["Web", "Edge", "Analytics"],
+    url: "https://deeptech.local/projects/spectra-node",
+  },
+  {
+    id: "drift-net",
+    name: "Drift Net",
+    description: "Autonomous drone lattice for environmental telemetry over oceans.",
+    field: "IoT",
+    tech: ["IoT", "Mesh", "5G"],
+    url: "https://deeptech.local/projects/drift-net",
+  },
+  {
+    id: "lambda-vault",
+    name: "Lambda Vault",
+    description: "Self‑optimizing data vault that rewrites its own redundancy rules.",
+    field: "AI",
+    tech: ["AI", "Cloud", "Security"],
+    url: "https://deeptech.local/projects/lambda-vault",
+  },
+  {
+    id: "ember-link",
+    name: "Ember Link",
+    description: "Hyper‑reliable mesh for disaster‑zone communications.",
+    field: "IoT",
+    tech: ["IoT", "Resilience", "Mesh"],
+    url: "https://deeptech.local/projects/ember-link",
+  },
+  {
+    id: "prism-lattice",
+    name: "Prism Lattice",
+    description: "Holographic city overlay for operators in mixed reality.",
+    field: "XR",
+    tech: ["XR", "3D", "WebGPU"],
+    url: "https://deeptech.local/projects/prism-lattice",
+  },
+  {
+    id: "synapse-trail",
+    name: "Synapse Trail",
+    description: "Neural pathfinding engine for autonomous ground convoys.",
+    field: "Robotics",
+    tech: ["Robotics", "CV", "AI"],
+    url: "https://deeptech.local/projects/synapse-trail",
+  },
+  {
+    id: "chrono-field",
+    name: "Chrono Field",
+    description: "Temporal anomaly detector for high‑frequency infra networks.",
+    field: "AI",
+    tech: ["AI", "Signal", "Cloud"],
+    url: "https://deeptech.local/projects/chrono-field",
+  },
 ];
 
 export default function AllProjectsMobile({
   onBackHome,
   onProjectSelect,
 }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const projectId = useMemo(() => {
+    const match = location.pathname.match(/\/allprojects\/?([^/]+)?/);
+    return match && match[1] ? match[1] : null;
+  }, [location.pathname]);
+
   const [activeFilter, setActiveFilter] = useState("All");
-  const [selectedProject, setSelectedProject] = useState(null);
+  const selectedProject = useMemo(
+    () => PROJECTS.find((p) => p.id === projectId) || null,
+    [projectId]
+  );
 
   const filteredProjects = useMemo(() => {
     if (activeFilter === "All") return PROJECTS;
@@ -68,11 +144,11 @@ export default function AllProjectsMobile({
   }, [activeFilter]);
 
   const handleCardClick = (project) => {
-    setSelectedProject(project);
     if (onProjectSelect) {
       // Call after a short delay so the scan/expand animation starts first
       setTimeout(() => onProjectSelect(project), 260);
     }
+    navigate(`/allprojects/${project.id}`);
   };
 
   const neonLines = [0, 1, 2, 3, 4];
@@ -125,7 +201,7 @@ export default function AllProjectsMobile({
 
         {/* Project bento grid */}
         <main className="mt-4 flex-1">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
             {filteredProjects.map((project, index) => (
               <React.Fragment key={project.id}>
                 <ProjectCard
@@ -134,7 +210,7 @@ export default function AllProjectsMobile({
                   onClick={() => handleCardClick(project)}
                 />
                 {(index + 1) % 4 === 0 && (
-                  <div className="col-span-2 flex items-center justify-center">
+                  <div className="col-span-2 lg:col-span-4 flex items-center justify-center">
                     <motion.div
                       className="h-px w-10/12 bg-gradient-to-r from-transparent via-orange-400/80 to-transparent"
                       initial={{ scaleX: 0 }}
@@ -165,7 +241,7 @@ export default function AllProjectsMobile({
 
       <ProjectDetailMobile
         project={selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={() => navigate("/allprojects")}
       />
     </div>
   );
@@ -200,7 +276,7 @@ function ProjectCard({ project, index, onClick }) {
 
       {/* Image */}
       <div className="relative mb-2 rounded-xl border border-orange-400/70 bg-gradient-to-br from-orange-500/30 via-black to-black p-[2px]">
-        <div className="relative aspect-square overflow-hidden rounded-[0.7rem] bg-black/80">
+        <div className="relative h-36 md:h-40 lg:h-44 overflow-hidden rounded-[0.7rem] bg-black/80">
           {project.image ? (
             <img
               src={project.image}
