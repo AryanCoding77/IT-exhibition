@@ -252,8 +252,8 @@ function ProjectCard({ project, index, onClick }) {
 
   return (
     <motion.button
-      layoutId={`project-${project.id}`}
       className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-orange-500/70 bg-white/5 p-2.5 text-left shadow-[0_20px_60px_rgba(0,0,0,0.95)] backdrop-blur-md"
+
       initial={{ opacity: 0, y: 30, x: slideFrom }}
       whileInView={{ opacity: 1, y: 0, x: 0 }}
       viewport={{ once: true, amount: 0.35 }}

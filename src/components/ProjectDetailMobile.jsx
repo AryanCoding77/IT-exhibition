@@ -63,12 +63,11 @@ export default function ProjectDetailMobile({ project, onClose }) {
         >
           {/* Main frosted card */}
           <motion.div
-            layoutId={`project-${project.id}`}
             className="relative flex h-[92vh] w-[92vw] max-w-md flex-col overflow-hidden rounded-[1.9rem] border border-orange-500/70 bg-gradient-to-b from-black/80 via-[#050505]/95 to-black/95 px-4 pb-4 pt-5 shadow-[0_30px_90px_rgba(0,0,0,1)] backdrop-blur-2xl"
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 40, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 260, damping: 26 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
           >
             {/* Animated neon scan bar at top */}
             <div className="pointer-events-none absolute inset-x-6 top-4 h-px overflow-hidden">
