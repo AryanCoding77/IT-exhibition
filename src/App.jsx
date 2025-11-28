@@ -4,6 +4,8 @@ import { ArrowRight } from 'lucide-react'
 import FuzzyText from './components/FuzzyText'
 import AllProjectsMobile from './components/AllProjectsMobile'
 import { useLocation, useNavigate } from 'react-router-dom'
+import cyberMan from '../cyber-man.png'
+import { supabase } from './supabaseClient'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -14,13 +16,16 @@ function App() {
   const [hoverRating, setHoverRating] = useState(0)
   const [selectedProject, setSelectedProject] = useState('')
   const [isProjectOpen, setIsProjectOpen] = useState(false)
+  const [submittingFeedback, setSubmittingFeedback] = useState(false)
+  const [feedbackStatus, setFeedbackStatus] = useState(null)
+  const [feedbackToast, setFeedbackToast] = useState(null)
   const location = useLocation()
   const navigate = useNavigate()
   const isAllProjects = location.pathname.startsWith('/allprojects')
   const currentPage = location.pathname === '/feedback' ? 'feedback' : 'home'
 
   const projectOptions = [
-    { value: '', label: 'Select a project' },
+    { value: 'overall', label: 'Overall' },
     { value: 'quantum-grid', label: 'Quantum Grid' },
     { value: 'neon-sentinel', label: 'Neon Sentinel' },
     { value: 'meta-weave', label: 'Meta Weave' },
@@ -28,6 +33,58 @@ function App() {
     { value: 'holo-chain', label: 'Holo Chain' },
     { value: 'omega-core', label: 'Omega Core' },
   ]
+
+  const handleFeedbackSubmit = async (event) => {
+    event.preventDefault()
+    if (submittingFeedback) return
+
+    const form = event.target
+    const formData = new FormData(form)
+    const name = formData.get('name')?.toString().trim() || ''
+    const email = formData.get('email')?.toString().trim() || ''
+    const message = formData.get('message')?.toString().trim() || ''
+
+    if (!name || !email || !rating) {
+      setFeedbackToast(null)
+      setFeedbackStatus('Please fill all required fields and select a rating.')
+      return
+    }
+
+    try {
+      setSubmittingFeedback(true)
+      setFeedbackStatus(null)
+      setFeedbackToast(null)
+
+      const { error } = await supabase.from('feedback').insert([
+        {
+          name,
+          email,
+          project: selectedProject || 'overall',
+          rating,
+          message,
+        },
+      ])
+
+      if (error) {
+        console.error('Error submitting feedback:', error)
+        setFeedbackStatus('Something went wrong while sending your feedback. Please try again.')
+        return
+      }
+
+      form.reset()
+      setRating(0)
+      setHoverRating(0)
+      setSelectedProject('')
+      setFeedbackStatus(null)
+      setFeedbackToast('Feedback sent. Thank you for upgrading the system.')
+    } catch (err) {
+      console.error('Unexpected error submitting feedback:', err)
+      setFeedbackToast(null)
+      setFeedbackStatus('Unexpected error. Please try again in a moment.')
+    } finally {
+      setSubmittingFeedback(false)
+    }
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -68,6 +125,16 @@ function App() {
     const id = requestAnimationFrame(step)
     return () => cancelAnimationFrame(id)
   }, [heroReady])
+
+  useEffect(() => {
+    if (!feedbackToast) return
+
+    const timer = setTimeout(() => {
+      setFeedbackToast(null)
+    }, 4000)
+
+    return () => clearTimeout(timer)
+  }, [feedbackToast])
 
   useEffect(() => {
     if (!heroReady) {
@@ -486,33 +553,37 @@ function App() {
               <p className="text-gray-300 text-sm mb-8 max-w-xl">
                 Share your thoughts about the DeepTech experience. Your input helps us evolve this cyberpunk world.
               </p>
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleFeedbackSubmit}>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="flex flex-col space-y-2">
                     <label className="text-xs tracking-[0.2em] uppercase text-gray-400">
-                      Name
+                      Name *
                     </label>
                     <input
                       type="text"
+                      name="name"
                       className="bg-black/40 border border-white/10 rounded-md px-4 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
                       placeholder="Neo, Trinity..."
+                      required
                     />
                   </div>
                   <div className="flex flex-col space-y-2">
                     <label className="text-xs tracking-[0.2em] uppercase text-gray-400">
-                      Email
+                      Email *
                     </label>
                     <input
                       type="email"
+                      name="email"
                       className="bg-black/40 border border-white/10 rounded-md px-4 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
                       placeholder="you@megacorp.net"
+                      required
                     />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="flex flex-col space-y-2">
                     <label className="text-xs tracking-[0.2em] uppercase text-gray-400">
-                      Project
+                      Project *
                     </label>
                     <div className="relative">
                       <button
@@ -523,7 +594,7 @@ function App() {
                         <span>
                           {selectedProject
                             ? projectOptions.find((p) => p.value === selectedProject)?.label
-                            : 'Select a project'}
+                            : 'Overall'}
                         </span>
                         <svg
                           className="w-4 h-4 text-neonOrange drop-shadow-[0_0_8px_rgba(255,153,0,0.8)]"
@@ -560,7 +631,7 @@ function App() {
                   </div>
                   <div className="flex flex-col space-y-2">
                     <label className="text-xs tracking-[0.2em] uppercase text-gray-400">
-                      Rating
+                      Rating *
                     </label>
                     <div className="flex items-center gap-4">
                       <div className="flex gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-1 shadow-[0_0_18px_rgba(0,0,0,0.8)]">
@@ -598,6 +669,7 @@ function App() {
                   </label>
                   <textarea
                     rows="4"
+                    name="message"
                     className="bg-black/40 border border-white/10 rounded-md px-4 py-3 text-sm resize-none focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
                     placeholder="Tell us what you loved, or what should be hacked next..."
                   />
@@ -605,12 +677,18 @@ function App() {
                 <div className="flex justify-end">
                   <motion.button
                     whileHover={{ scale: 1.03, boxShadow: '0 0 25px rgba(255, 153, 0, 0.6)' }}
-                    className="px-6 py-2.5 bg-gradient-to-r from-neonOrange to-gradientOrange rounded-full text-sm font-semibold tracking-[0.2em] uppercase"
+                    className="px-6 py-2.5 bg-gradient-to-r from-neonOrange to-gradientOrange rounded-full text-sm font-semibold tracking-[0.2em] uppercase disabled:opacity-60 disabled:cursor-not-allowed"
                     type="submit"
+                    disabled={submittingFeedback}
                   >
                     Send Feedback
                   </motion.button>
                 </div>
+                {feedbackStatus && (
+                  <p className="text-xs text-gray-300 mt-2">
+                    {feedbackStatus}
+                  </p>
+                )}
               </form>
             </div>
           </div>
@@ -736,26 +814,30 @@ function App() {
               <p className="text-gray-300 text-xs mb-6">
                 Share your thoughts about the DeepTech experience. Your input helps us evolve this cyberpunk world.
               </p>
-              <form className="space-y-5">
+              <form className="space-y-5" onSubmit={handleFeedbackSubmit}>
                 <div className="space-y-4">
                   <div className="flex flex-col space-y-2">
                     <label className="text-[10px] tracking-[0.2em] uppercase text-gray-400">
-                      Name
+                      Name *
                     </label>
                     <input
                       type="text"
+                      name="name"
                       className="bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
                       placeholder="Neo, Trinity..."
+                      required
                     />
                   </div>
                   <div className="flex flex-col space-y-2">
                     <label className="text-[10px] tracking-[0.2em] uppercase text-gray-400">
-                      Email
+                      Email *
                     </label>
                     <input
                       type="email"
+                      name="email"
                       className="bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
                       placeholder="you@megacorp.net"
+                      required
                     />
                   </div>
                 </div>
@@ -763,7 +845,7 @@ function App() {
                 <div className="space-y-4">
                   <div className="flex flex-col space-y-2">
                     <label className="text-[10px] tracking-[0.2em] uppercase text-gray-400">
-                      Project
+                      Project *
                     </label>
                     <div className="relative">
                       <button
@@ -774,7 +856,7 @@ function App() {
                         <span>
                           {selectedProject
                             ? projectOptions.find((p) => p.value === selectedProject)?.label
-                            : 'Select a project'}
+                            : 'Overall'}
                         </span>
                         <svg
                           className="w-3.5 h-3.5 text-neonOrange drop-shadow-[0_0_8px_rgba(255,153,0,0.8)]"
@@ -811,7 +893,7 @@ function App() {
                   </div>
                   <div className="flex flex-col space-y-2">
                     <label className="text-[10px] tracking-[0.2em] uppercase text-gray-400">
-                      Rating
+                      Rating *
                     </label>
                     <div className="flex flex-col gap-2">
                       <div className="flex justify-between rounded-full border border-white/10 bg-black/40 px-2 py-1 shadow-[0_0_18px_rgba(0,0,0,0.8)]">
@@ -850,6 +932,7 @@ function App() {
                   </label>
                   <textarea
                     rows="4"
+                    name="message"
                     className="bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm resize-none focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
                     placeholder="Tell us what you loved, or what should be hacked next..."
                   />
@@ -858,12 +941,18 @@ function App() {
                 <div className="flex justify-end">
                   <motion.button
                     whileHover={{ scale: 1.03, boxShadow: '0 0 25px rgba(255, 153, 0, 0.6)' }}
-                    className="px-5 py-2.5 bg-gradient-to-r from-neonOrange to-gradientOrange rounded-full text-xs font-semibold tracking-[0.2em] uppercase"
+                    className="px-5 py-2.5 bg-gradient-to-r from-neonOrange to-gradientOrange rounded-full text-xs font-semibold tracking-[0.2em] uppercase disabled:opacity-60 disabled:cursor-not-allowed"
                     type="submit"
+                    disabled={submittingFeedback}
                   >
                     Send Feedback
                   </motion.button>
                 </div>
+                {feedbackStatus && (
+                  <p className="text-[10px] text-gray-300 mt-1">
+                    {feedbackStatus}
+                  </p>
+                )}
               </form>
             </div>
           </div>
@@ -873,6 +962,31 @@ function App() {
       </>
       )}
       </div>
+
+      <AnimatePresence>
+        {feedbackToast && (
+          <motion.div
+            className="fixed bottom-10 left-1/2 z-[90] -translate-x-1/2 w-full max-w-sm sm:max-w-md px-4 sm:px-5 py-3 rounded-xl border border-emerald-400/70 bg-gradient-to-r from-emerald-500/95 via-emerald-400/95 to-green-400/95 text-black shadow-[0_0_30px_rgba(16,185,129,0.9)] flex items-center gap-3"
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+          >
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-black/20 border border-white/30">
+              <span className="text-sm font-bold">✓</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[10px] font-semibold tracking-[0.22em] uppercase">
+                Feedback received
+              </span>
+              <span className="text-[11px]">
+                {feedbackToast}
+              </span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </>
   )
 }
