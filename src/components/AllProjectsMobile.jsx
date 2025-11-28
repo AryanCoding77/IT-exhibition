@@ -151,7 +151,7 @@ export default function AllProjectsMobile({
     navigate(`/allprojects/${project.id}`);
   };
 
-  const neonLines = [0, 1, 2, 3, 4];
+  const neonLines = [0, 1, 2];
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#0a0a0a] text-white">
@@ -161,8 +161,8 @@ export default function AllProjectsMobile({
         <div className="absolute bottom-[-30%] left-1/2 h-[26rem] w-[26rem] -translate-x-1/2 rounded-full bg-orange-600/20 blur-3xl" />
       </div>
 
-      {/* Neon data rays */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
+      {/* Neon data rays (hidden on small screens to improve mobile performance) */}
+      <div className="pointer-events-none absolute inset-0 -z-10 hidden md:block">
         {neonLines.map((i) => (
           <motion.div
             key={i}

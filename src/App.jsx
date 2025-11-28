@@ -32,7 +32,7 @@ function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false)
-    }, 3000)
+    }, 1000)
     return () => clearTimeout(timer)
   }, [])
 
@@ -155,16 +155,9 @@ function App() {
                 transition={{ delay: 0.3 }}
                 className="absolute -top-32 left-1/2 -translate-x-1/2"
               >
-                <FuzzyText
-                  fontSize="clamp(2.2rem, 4vw, 4rem)"
-                  fontWeight={900}
-                  fontFamily="Orbitron"
-                  color="#FF9900"
-                  baseIntensity={0.35}
-                  enableHover={false}
-                >
+                <p className="text-neonOrange font-orbitron text-3xl tracking-[0.3em] font-extrabold">
                   DEEP TECH
-                </FuzzyText>
+                </p>
               </motion.div>
 
               {/* Loading text */}

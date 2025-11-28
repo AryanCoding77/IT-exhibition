@@ -26,7 +26,7 @@ const scanLineVariants = {
   animate: {
     x: "40%",
     opacity: 1,
-    transition: { duration: 1.2, ease: "easeOut", repeat: Infinity },
+    transition: { duration: 1.2, ease: "easeOut" },
   },
 };
 
@@ -115,13 +115,9 @@ export default function ProjectDetailMobile({ project, onClose }) {
                   {/* Pulsing glow overlay */}
                   <motion.div
                     className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(249,115,22,0.45),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(253,224,71,0.35),transparent_55%)]"
-                    initial={{ opacity: 0.4 }}
-                    animate={{ opacity: [0.4, 0.7, 0.4] }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
+                    initial={{ opacity: 0.5 }}
+                    animate={{ opacity: 0.6 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
                   />
                   {/* Play button */}
                   <motion.div
