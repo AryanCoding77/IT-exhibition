@@ -348,6 +348,18 @@ if (project.id === "D.T-PPT") {
     );
   }
 
+    if (project.id === "Smarthome") {
+    return (
+      <>
+        <p className="text-[15px] leading-relaxed text-neutral-200">
+         A smart home uses the Internet of Things (IoT) to make daily living more convenient, secure, and energy-efficient by automating household appliances. In this project, we created a basic IoT-based smart home system that allows users to remotely control devices such as lights, fans, and other electrical appliances through an internet-connected interface. Using components like a Raspberry Pi or NodeMCU, relay modules, jumper wires, Wi-Fi, and a simple dashboard, the system processes user commands online and sends signals to the microcontroller. The microcontroller then switches appliances ON or OFF through relays. This project highlights how IoT technology simplifies life by enabling automatic and remote operation of home devices, focusing only on manual and web-based control without voice commands.</p>
+        
+      </>
+
+    );
+  }
+
+
   if (project.description) {
     return (
       <p className="text-[15px] leading-relaxed text-neutral-200">
