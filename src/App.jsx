@@ -966,7 +966,7 @@ function App() {
       <AnimatePresence>
         {feedbackToast && (
           <motion.div
-            className="fixed bottom-10 left-1/2 z-[90] -translate-x-1/2 w-full max-w-sm sm:max-w-md px-4 sm:px-5 py-3 rounded-xl border border-emerald-400/70 bg-gradient-to-r from-emerald-500/95 via-emerald-400/95 to-green-400/95 text-black shadow-[0_0_30px_rgba(16,185,129,0.9)] flex items-center gap-3"
+            className="fixed bottom-10 left-4 sm:left-8 z-[90] w-[calc(100%-2rem)] sm:w-[360px] max-w-full px-4 sm:px-5 py-3 rounded-xl border border-emerald-400/70 bg-gradient-to-r from-emerald-500/95 via-emerald-400/95 to-green-400/95 text-black shadow-[0_0_30px_rgba(16,185,129,0.9)] flex items-center gap-3"
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
