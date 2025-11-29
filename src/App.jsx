@@ -577,7 +577,7 @@ function App() {
                       type="text"
                       name="name"
                       className="bg-black/40 border border-white/10 rounded-md px-4 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
-                      placeholder="Neo, Trinity..."
+                      placeholder="Name"
                       required
                     />
                   </div>
@@ -589,7 +589,7 @@ function App() {
                       type="email"
                       name="email"
                       className="bg-black/40 border border-white/10 rounded-md px-4 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
-                      placeholder="you@megacorp.net"
+                      placeholder="Email"
                       required
                     />
                   </div>
@@ -833,7 +833,7 @@ function App() {
                       type="text"
                       name="name"
                       className="bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
-                      placeholder="Neo, Trinity..."
+                      placeholder="Name"
                       required
                     />
                   </div>
@@ -845,7 +845,7 @@ function App() {
                       type="email"
                       name="email"
                       className="bg-black/40 border border-white/10 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-neonOrange focus:ring-1 focus:ring-neonOrange"
-                      placeholder="you@megacorp.net"
+                      placeholder="Email"
                       required
                     />
                   </div>
