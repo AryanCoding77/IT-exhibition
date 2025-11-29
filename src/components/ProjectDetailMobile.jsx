@@ -227,7 +227,7 @@ function renderProjectDescription(project) {
     );
   }
 
-  if (project.id === "judo") {
+  if (project.id === "autostudy") {
     return (
       <>
         <p className="text-[15px] leading-relaxed text-neutral-200">
@@ -238,193 +238,245 @@ function renderProjectDescription(project) {
           The AI extracts specific elements from the book and organizes them into blocks such as Definitions, Derivations & Formulas, and Chapter Questions, giving students a clean, structured study layout.        </p>
         <p className="text-[14px] leading-relaxed text-neutral-400">
           Users can chat with their book through AI to clarify concepts, get explanations, and ask questions. </p>
-          <p className="text-[14px] leading-relaxed text-neutral-400">
-            A dedicated assessment section generates quizzes, questions, and concept tests based on the uploaded content to evaluate understanding. </p>
-          </>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          A dedicated assessment section generates quizzes, questions, and concept tests based on the uploaded content to evaluate understanding. </p>
+      </>
 
-          );
+    );
   }
 
-
-
-          if (project.description) {
+  if (project.id === "language-processor") {
     return (
-          <p className="text-[15px] leading-relaxed text-neutral-200">
-            {project.description}
-          </p>
-          );
+      <>
+        <p className="text-[15px] leading-relaxed text-neutral-200">
+          This language processor and translator converts words or sentences from one language to another, acting as an interpreter to support smooth communication.          </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          It is built using Machine Learning, especially Neural Machine Translation (NMT), which uses an encoder–decoder system and deep learning to deliver accurate, natural-sounding translations.
+        </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          The translator supports global communication, market expansion, legal and financial translation, customer support, and international travel across trade, tourism, education, and healthcare.        </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          Its goal is worldwide unification by enabling equal communication among people of all countries.        </p>
+
+      </>
+
+    );
   }
 
-          return (
-          <p className="text-[14px] leading-relaxed text-neutral-400">
-            This project explores cutting‑edge concepts in {project.field || "tech"}
-            , with a focus on experimentation and rapid iteration.
-          </p>
-          );
+
+  if (project.id === "ecolens") {
+    return (
+      <>
+        <p className="text-[15px] leading-relaxed text-neutral-200">
+          This screen is the Windows Boot Manager, which appears when your system has issues loading Windows normally.          </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          It usually comes after a forced shutdown, hardware change, corrupted boot files, or BIOS settings reset.        </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          The system is asking you to choose an option to continue booting Windows safely.        </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          Select “Start Windows Normally” first; if it fails, choose “Launch Startup Repair” to automatically fix boot problems.        </p>
+
+      </>
+
+    );
+  }
+
+  if (project.id === "real-time-hammerball-scoreboard") {
+    return (
+      <>
+        <p className="text-[15px] leading-relaxed text-neutral-200">
+          The Real-Time Hammerball Scoreboard is a digital system that eliminates manual scoring errors by updating game statistics instantly as data is entered.          </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          The scorer saves the spreadsheet, a Python server detects the update, and a WebSocket message immediately refreshes the on-screen scoreboard with new runs, wickets, and units.        </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          Excel/LibreOffice for input, Python with openpyxl and websockets for backend, and HTML-JavaScript with Tailwind CSS for the display.        </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          A custom scoring web form and multi-screen live broadcasting are planned for expanded functionality.        </p>
+
+      </>
+
+    );
+  }
+
+  if (project.description) {
+    return (
+      <p className="text-[15px] leading-relaxed text-neutral-200">
+        {project.description}
+      </p>
+    );
+  }
+
+  return (
+    <p className="text-[14px] leading-relaxed text-neutral-400">
+      This project explores cutting‑edge concepts in {project.field || "tech"}
+      , with a focus on experimentation and rapid iteration.
+    </p>
+  );
 }
 
-          export default function ProjectDetailMobile({project, onClose}) {
+export default function ProjectDetailMobile({ project, onClose }) {
   return (
-          <AnimatePresence>
-            {project && (
+    <AnimatePresence>
+      {project && (
+        <motion.div
+          key={project.id}
+          className="fixed inset-0 z-40 flex items-center justify-center bg-black/80 backdrop-blur-xl"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          {/* Main frosted card */}
+          <motion.div
+            className="relative flex h-[92vh] w-[92vw] max-w-md flex-col overflow-hidden rounded-[1.9rem] border border-orange-500/70 bg-gradient-to-b from-black/80 via-[#050505]/95 to-black/95 px-4 pb-4 pt-5 shadow-[0_30px_90px_rgba(0,0,0,1)] backdrop-blur-2xl"
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 40, opacity: 0 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+          >
+            {/* Animated neon scan bar at top */}
+            <div className="pointer-events-none absolute inset-x-6 top-4 h-px overflow-hidden">
               <motion.div
-                key={project.id}
-                className="fixed inset-0 z-40 flex items-center justify-center bg-black/80 backdrop-blur-xl"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                {/* Main frosted card */}
-                <motion.div
-                  className="relative flex h-[92vh] w-[92vw] max-w-md flex-col overflow-hidden rounded-[1.9rem] border border-orange-500/70 bg-gradient-to-b from-black/80 via-[#050505]/95 to-black/95 px-4 pb-4 pt-5 shadow-[0_30px_90px_rgba(0,0,0,1)] backdrop-blur-2xl"
-                  initial={{ y: 40, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: 40, opacity: 0 }}
-                  transition={{ duration: 0.28, ease: "easeOut" }}
+                className="h-px w-[160%] bg-gradient-to-r from-transparent via-orange-400 to-transparent"
+                variants={scanLineVariants}
+                initial="initial"
+                animate="animate"
+              />
+            </div>
+
+            {/* Scrollable content */}
+            <div className="relative mt-4 flex-1 space-y-5 overflow-y-auto pr-1">
+              {/* HEADER ROW */}
+              <div className="flex gap-3">
+                {/* Project logo */}
+                <div className="relative">
+                  <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border border-orange-500/70 bg-black">
+                    {project.image ? (
+                      <img
+                        src={project.image}
+                        alt={project.name}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-[radial-gradient(circle_at_0%_0%,rgba(249,115,22,0.7),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(253,224,71,0.55),transparent_55%)]" />
+                    )}
+                  </div>
+                </div>
+
+                {/* Name + field tag */}
+                <div className="flex min-w-0 flex-1 flex-col justify-center">
+                  <h2 className="text-[1.3rem] font-semibold uppercase tracking-[0.22em] text-white drop-shadow-[0_0_16px_rgba(248,150,31,0.9)]">
+                    {project.name}
+                  </h2>
+                  <div className="mt-2 flex items-center gap-2">
+                    <span className="rounded-full border border-orange-400/60 bg-orange-500/15 px-2 py-[3px] text-[10px] uppercase tracking-[0.26em] text-orange-200">
+                      {project.field || "Field"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* FEATURE VIDEO (thumbnail + play) */}
+              {project.detailImage && (
+                <motion.button
+                  type="button"
+                  className="group relative w-full"
+                  whileTap={{ scale: 0.97 }}
                 >
-                  {/* Animated neon scan bar at top */}
-                  <div className="pointer-events-none absolute inset-x-6 top-4 h-px overflow-hidden">
-                    <motion.div
-                      className="h-px w-[160%] bg-gradient-to-r from-transparent via-orange-400 to-transparent"
-                      variants={scanLineVariants}
-                      initial="initial"
-                      animate="animate"
+                  <div className="relative aspect-video overflow-hidden rounded-2xl border border-orange-500/70 bg-black shadow-[0_25px_60px_rgba(0,0,0,1)]">
+                    {/* Project‑specific demo image */}
+                    <img
+                      src={project.detailImage}
+                      alt={`${project.name} demo`}
+                      className="h-full w-full object-cover"
                     />
+                    {/* Soft gradient overlay for readability */}
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    {/* Play button */}
                   </div>
+                </motion.button>
+              )}
 
-                  {/* Scrollable content */}
-                  <div className="relative mt-4 flex-1 space-y-5 overflow-y-auto pr-1">
-                    {/* HEADER ROW */}
-                    <div className="flex gap-3">
-                      {/* Project logo */}
-                      <div className="relative">
-                        <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl border border-orange-500/70 bg-black">
-                          {project.image ? (
-                            <img
-                              src={project.image}
-                              alt={project.name}
-                              className="h-full w-full object-cover"
-                            />
-                          ) : (
-                            <div className="h-full w-full bg-[radial-gradient(circle_at_0%_0%,rgba(249,115,22,0.7),transparent_55%),radial-gradient(circle_at_100%_100%,rgba(253,224,71,0.55),transparent_55%)]" />
-                          )}
-                        </div>
-                      </div>
+              {/* PROJECT DESCRIPTION */}
+              <section className="space-y-2">
+                <h3 className="text-xs uppercase tracking-[0.28em] text-neutral-400">
+                  About project
+                </h3>
+                {renderProjectDescription(project)}
 
-                      {/* Name + field tag */}
-                      <div className="flex min-w-0 flex-1 flex-col justify-center">
-                        <h2 className="text-[1.3rem] font-semibold uppercase tracking-[0.22em] text-white drop-shadow-[0_0_16px_rgba(248,150,31,0.9)]">
-                          {project.name}
-                        </h2>
-                        <div className="mt-2 flex items-center gap-2">
-                          <span className="rounded-full border border-orange-400/60 bg-orange-500/15 px-2 py-[3px] text-[10px] uppercase tracking-[0.26em] text-orange-200">
-                            {project.field || "Field"}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* FEATURE VIDEO (thumbnail + play) */}
-                    <motion.button
-                      type="button"
-                      className="group relative w-full"
-                      whileTap={{ scale: 0.97 }}
-                    >
-                      <div className="relative aspect-video overflow-hidden rounded-2xl border border-orange-500/70 bg-black shadow-[0_25px_60px_rgba(0,0,0,1)]">
-                        {/* POP & HOP demo image */}
-                        {/* Project‑specific demo image */}
-                        <img
-                          src={`${project.detailImage}`}
-                          alt={`${project.name} demo`}
-                          className="h-full w-full object-cover"
-                        />
-                        {/* Soft gradient overlay for readability */}
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                        {/* Play button */}
-
-                      </div>
-                    </motion.button>
-
-                    {/* PROJECT DESCRIPTION */}
-                    <section className="space-y-2">
-                      <h3 className="text-xs uppercase tracking-[0.28em] text-neutral-400">
-                        About project
-                      </h3>
-                      {renderProjectDescription(project)}
-
-                      {/* Highlight chips (from tech stack) */}
-                      {project.tech && project.tech.length > 0 && (
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          {project.tech.map((tag, i) => {
-                            const palette =
-                              i % 3 === 0
-                                ? "from-orange-500/80 to-yellow-300/80 text-black"
-                                : i % 3 === 1
-                                  ? "from-cyan-400/80 to-sky-300/80 text-black"
-                                  : "from-fuchsia-500/80 to-purple-400/80 text-black";
-                            return (
-                              <span
-                                key={tag}
-                                className={`rounded-full bg-gradient-to-r ${palette} px-3 py-[5px] text-[9px] uppercase tracking-[0.26em] shadow-[0_0_16px_rgba(0,0,0,0.9)]`}
-                              >
-                                {tag}
-                              </span>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </section>
-
-                    {/* INFO PANEL */}
-                    <section className="space-y-3">
-                      <div className="flex flex-wrap items-center justify-end gap-3">
-                        {/* Status chip */}
-                        {(() => {
-                          const s = statusChip(project.status);
-                          if (!s) return null;
-                          return (
-                            <span
-                              className={`rounded-full px-3 py-[5px] text-[9px] uppercase tracking-[0.22em] ${s.classes}`}
-                            >
-                              {s.label}
-                            </span>
-                          );
-                        })()}
-                      </div>
-
-                      {/* Date + meta row (placeholder) */}
-                      <div className="flex flex-wrap items-center gap-3 text-[11px] text-neutral-500">
-                        <span>Updated · 2049‑10‑21</span>
-                        <span className="h-[3px] w-[3px] rounded-full bg-neutral-600" />
-                        <span>Deep Tech Showcase · Mobile</span>
-                      </div>
-                    </section>
+                {/* Highlight chips (from tech stack) */}
+                {project.tech && project.tech.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {project.tech.map((tag, i) => {
+                      const palette =
+                        i % 3 === 0
+                          ? "from-orange-500/80 to-yellow-300/80 text-black"
+                          : i % 3 === 1
+                            ? "from-cyan-400/80 to-sky-300/80 text-black"
+                            : "from-fuchsia-500/80 to-purple-400/80 text-black";
+                      return (
+                        <span
+                          key={tag}
+                          className={`rounded-full bg-gradient-to-r ${palette} px-3 py-[5px] text-[9px] uppercase tracking-[0.26em] shadow-[0_0_16px_rgba(0,0,0,0.9)]`}
+                        >
+                          {tag}
+                        </span>
+                      );
+                    })}
                   </div>
+                )}
+              </section>
 
-                  {/* ACTIONS FOOTER */}
-                  <div className="mt-4 flex items-center justify-between text-[11px] uppercase tracking-[0.24em]">
-                    {/* View Project button */}
-                    <a
-                      href={project.url || "#"}
-                      target={project.url ? "_blank" : "_self"}
-                      rel={project.url ? "noreferrer" : undefined}
-                      className="mr-2 flex-1 rounded-full bg-gradient-to-r from-orange-500 via-orange-400 to-yellow-300 py-2.5 text-center font-semibold text-black shadow-[0_0_25px_rgba(0,0,0,1)] active:scale-95 transition-transform"
-                    >
-                      View Project
-                    </a>
+              {/* INFO PANEL */}
+              <section className="space-y-3">
+                <div className="flex flex-wrap items-center justify-end gap-3">
+                  {/* Status chip */}
+                  {(() => {
+                    const s = statusChip(project.status);
+                    if (!s) return null;
+                    return (
+                      <span
+                        className={`rounded-full px-3 py-[5px] text-[9px] uppercase tracking-[0.22em] ${s.classes}`}
+                      >
+                        {s.label}
+                      </span>
+                    );
+                  })()}
+                </div>
 
-                    {/* Close pill */}
-                    <button
-                      type="button"
-                      onClick={onClose}
-                      className="ml-2 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-[11px] uppercase tracking-[0.22em] text-neutral-200 shadow-[0_0_14px_rgba(0,0,0,1)] active:scale-95"
-                    >
-                      Close
-                    </button>
-                  </div>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          );
+                {/* Date + meta row (placeholder) */}
+                <div className="flex flex-wrap items-center gap-3 text-[11px] text-neutral-500">
+                  <span>Updated · 2049‑10‑21</span>
+                  <span className="h-[3px] w-[3px] rounded-full bg-neutral-600" />
+                  <span>Deep Tech Showcase · Mobile</span>
+                </div>
+              </section>
+            </div>
+
+            {/* ACTIONS FOOTER */}
+            <div className="mt-4 flex items-center justify-end gap-3 text-[11px] uppercase tracking-[0.24em]">
+              {/* View Project button – only for MuscleAI */}
+              {project.id === "muscleai" && (
+                <a
+                  href={project.url || "#"}
+                  target={project.url ? "_blank" : "_self"}
+                  rel={project.url ? "noreferrer" : undefined}
+                  className="rounded-full bg-gradient-to-r from-orange-500 via-orange-400 to-yellow-300 px-5 py-2.5 text-center font-semibold text-black shadow-[0_0_25px_rgba(0,0,0,1)] active:scale-95 transition-transform"
+                >
+                  View Project
+                </a>
+              )}
+              {/* Close pill */}
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-[11px] uppercase tracking-[0.22em] text-neutral-200 shadow-[0_0_14px_rgba(0,0,0,1)] active:scale-95"
+              >
+                Close
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 }

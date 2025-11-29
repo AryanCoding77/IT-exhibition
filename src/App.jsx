@@ -26,12 +26,24 @@ function App() {
 
   const projectOptions = [
     { value: 'overall', label: 'Overall' },
-    { value: 'quantum-grid', label: 'Quantum Grid' },
-    { value: 'neon-sentinel', label: 'Neon Sentinel' },
-    { value: 'meta-weave', label: 'Meta Weave' },
-    { value: 'aether-link', label: 'Aether Link' },
-    { value: 'holo-chain', label: 'Holo Chain' },
-    { value: 'omega-core', label: 'Omega Core' },
+    { value: 'muscleai', label: 'MuscleAI' },
+    { value: 'pop-hop', label: 'POP & HOP' },
+    { value: 'periodic-table-of-programming-lanuages', label: 'Periodic table of programming lanuages' },
+    { value: 'ecosense', label: 'EcoSense' },
+    { value: 'sanketify', label: 'Sanketify' },
+    { value: 'nexbuild', label: 'NexBuild' },
+    { value: 'evadex', label: 'EvadeX' },
+    { value: 'autostudy', label: 'AutoStudy' },
+    { value: 'language-processor', label: 'Language Processor & Translator' },
+    { value: 'ecolens', label: 'EcoLens' },
+    { value: 'real-time-hammerball-scoreboard', label: 'Real-Time Hammerball Scoreboard' },
+    { value: 'Agri-Smart', label: 'Agri-Smart' },
+    { value: 'Gamer', label: 'Gamer' },
+    { value: 'Edusorter', label: 'Edusorter' },
+    { value: 'Transly', label: 'Transly' },
+    { value: 'D.T PPT', label: 'D.T PPT' },
+    { value: 'Smarthome', label: 'Smarthome' },
+    { value: 'Chatbot', label: 'Chatbot' },
   ]
 
   const handleFeedbackSubmit = async (event) => {
@@ -143,8 +155,8 @@ function App() {
     }
 
     const start = 0
-    const end = 76285
-    const duration = 2500
+    const end = 11
+    const duration = 1200
     const startTime = performance.now()
 
     const step = (now) => {
@@ -498,10 +510,12 @@ function App() {
                 <div className="w-16 h-16 bg-void rounded-lg"></div>
               </div>
               <div>
-                <p className="text-4xl font-orbitron font-bold text-neonOrange mb-1">{statsCount.toLocaleString()}K+</p>
-                <p className="text-gray-300 text-sm tracking-wide mb-1">Experience the Future</p>
+                <p className="text-4xl font-orbitron font-bold text-neonOrange mb-1">
+                  {statsCount}+ Projects
+                </p>
+                <p className="text-gray-300 text-sm tracking-wide mb-1">DeepTech</p>
                 <p className="text-gray-400 text-xs leading-relaxed">
-                  Explore the high-tech, low-life world where the lines between
+                  A showcase of future-ready systems blending intelligence, automation, and real-world problem-solving.
                 </p>
               </div>
             </div>
@@ -531,9 +545,9 @@ function App() {
             className="absolute bottom-24 right-24 z-30"
           >
             <div className="glass-morph rounded-lg p-8 text-center w-48">
-              <p className="text-6xl font-orbitron font-bold text-neonOrange mb-2">{experienceCount}+</p>
+              <p className="text-6xl font-orbitron font-bold text-neonOrange mb-2">50+</p>
               <p className="text-gray-300 text-sm tracking-wide leading-relaxed">
-                Years of Experiences
+                hours of work
               </p>
             </div>
           </motion.div>
@@ -699,16 +713,11 @@ function App() {
       <div className="relative z-40 md:hidden">
         {currentPage === 'home' && (
         <section className="flex flex-col min-h-screen px-6 pt-6 pb-8">
-          <header className="flex items-center justify-between mb-6">
+          <header className="flex items-center mb-6">
             <div className="text-xl font-orbitron font-bold tracking-[0.25em]">
               <span>Deep</span>
               <span className="text-neonOrange"> Tech</span>
             </div>
-            <button className="flex flex-col items-end gap-1.5">
-              <span className="h-0.5 w-6 bg-white rounded-full"></span>
-              <span className="h-0.5 w-5 bg-white rounded-full"></span>
-              <span className="h-0.5 w-4 bg-white rounded-full"></span>
-            </button>
           </header>
 
           <div className="flex-1 flex flex-col justify-center">
@@ -754,23 +763,23 @@ function App() {
                 </div>
                 <div>
                   <p className="text-xl font-orbitron font-bold text-neonOrange leading-tight">
-                    {statsCount.toLocaleString()}K+
+                    {statsCount}+ Projects
                   </p>
                   <p className="text-[11px] text-gray-200 font-semibold mt-1">
-                    Experience the Future
+                    DeepTech
                   </p>
                   <p className="text-[10px] text-gray-400 mt-1 leading-relaxed">
-                    Explore the high-tech, low-life world where the lines between humanity and machinery blur.
+                    A showcase of future-ready systems blending intelligence, automation, and real-world problem-solving.
                   </p>
                 </div>
               </div>
 
               <div className="rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md px-4 py-4 w-full">
                 <h3 className="text-xs font-semibold tracking-[0.25em] uppercase text-neonOrange mb-2">
-                  Art and Design
+                  DEEPTECH
                 </h3>
                 <p className="text-xs text-gray-300 leading-relaxed">
-                  Feast your eyes on stunning visuals that bring the cyberpunk aesthetic to life.
+                  Unlocking The Possibilites
                 </p>
               </div>
 
