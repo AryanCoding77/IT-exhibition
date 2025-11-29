@@ -245,7 +245,7 @@ function renderProjectDescription(project) {
     );
   }
 
-  if (project.id === "language-processor") {
+  if (project.id === "TRANSLYADVANCED") {
     return (
       <>
         <p className="text-[15px] leading-relaxed text-neutral-200">
@@ -292,6 +292,56 @@ function renderProjectDescription(project) {
           Excel/LibreOffice for input, Python with openpyxl and websockets for backend, and HTML-JavaScript with Tailwind CSS for the display.        </p>
         <p className="text-[14px] leading-relaxed text-neutral-400">
           A custom scoring web form and multi-screen live broadcasting are planned for expanded functionality.        </p>
+
+      </>
+
+    );
+  }
+
+if (project.id === "Eco-Product-Finder") {
+    return (
+      <>
+        <p className="text-[15px] leading-relaxed text-neutral-200">
+          The Real-Time Hammerball Scoreboard is a digital system that eliminates manual scoring errors by updating game statistics instantly as data is entered.          </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          The scorer saves the spreadsheet, a Python server detects the update, and a WebSocket message immediately refreshes the on-screen scoreboard with new runs, wickets, and units.        </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          Excel/LibreOffice for input, Python with openpyxl and websockets for backend, and HTML-JavaScript with Tailwind CSS for the display.        </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          A custom scoring web form and multi-screen live broadcasting are planned for expanded functionality.        </p>
+
+      </>
+
+    );
+  }
+
+  
+if (project.id === "D.T-PPT") {
+    return (
+      <>
+        <p className="text-[15px] leading-relaxed text-neutral-200">
+         Deep Tech refers to innovations built on advanced scientific and engineering breakthroughs with the power to transform entire industries. It includes fields like AI, robotics, quantum computing, biotechnology, advanced materials, semiconductors, space tech, and clean energy          </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          These technologies solve complex global challenges by enabling intelligent automation, real-time analytics, and sustainable solutions. In healthcare, Deep Tech powers early disease detection, robotic surgeries, and personalized monitoring.        </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          In energy, it optimizes renewable sources, smart grids, and predictive maintenance. In finance, it enhances fraud detection, secure transactions, and AI-driven advisory systems. Defense benefits from AI surveillance and cybersecurity, while transportation and manufacturing leverage automation, smart routing, and predictive systems for safer, efficient operations.        </p>
+        
+      </>
+
+    );
+  }
+  if (project.id === "Neon-Arcade-Hub") {
+    return (
+      <>
+        <p className="text-[15px] leading-relaxed text-neutral-200">
+         Neon Arcade Hub is a vibrant, neon-themed gaming platform that combines classic and modern minigames into one polished experience</p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          Players start on a unified dashboard where they can browse games, track their XP, monitor progress, and jump instantly into any challenge.
+        </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          Each game carries its own unique style — from strategic classics like Rock Paper Scissors and Tic-Tac-Toe to fast-paced options such as Hangman, Number Guess, and Snake. Several games feature adaptive AI, making every match feel dynamic, competitive, and constantly engaging. Progress is shared across the hub, letting players build streaks, set new personal bests, and unlock achievements.        </p>
+        <p className="text-[14px] leading-relaxed text-neutral-400">
+          Smooth animations, clean layouts, and glowing neon visuals give the entire platform a modern, immersive feel.        </p>
 
       </>
 
