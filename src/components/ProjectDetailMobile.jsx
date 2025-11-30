@@ -359,6 +359,17 @@ if (project.id === "D.T-PPT") {
     );
   }
 
+   if (project.id === "Red-Shadow-Chat") {
+    return (
+      <>
+        <p className="text-[15px] leading-relaxed text-neutral-200">
+         This Python-based GUI Chatting Application is built using Tkinter for the interface and Pillow for image handling. It includes a simple file-based login system that stores user credentials in JSON format. The app features a custom black-and-red theme, a scrollable chat area, emoji support, and an AI reply engine that responds using keyword matching and random fallback messages. A unique loading animation with falling red numbers appears before login, enhancing the visual experience. The code follows a modular class-based structure, includes keyboard shortcuts, and provides error handling for smooth performance. Future updates aim to add voice input, reminders, a calculator, quiz mode, mini-games, and multi-user support.</p>
+        
+      </>
+
+    );
+  }
+
 
   if (project.description) {
     return (
